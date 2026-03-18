@@ -68,9 +68,7 @@ def export_test(
 
     # Test loading exported model and perform forward pass.
     if framework == "torch":
-        model = torch.load(
-            os.path.join(export_dir, "model", "model.pt"), weights_only=False
-        )
+        model = torch.load(os.path.join(export_dir, "model", "model.pt"))
         assert model
         results = model(
             input_dict={"obs": torch.from_numpy(test_obs)},
@@ -97,7 +95,7 @@ def export_test(
     # Test loading exported model and perform forward pass.
     if framework == "torch":
         filename = os.path.join(export_dir, "model.pt")
-        model = torch.load(filename, weights_only=False)
+        model = torch.load(filename)
         assert model
         results = model(
             input_dict={"obs": torch.from_numpy(test_obs)},

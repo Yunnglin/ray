@@ -145,7 +145,10 @@ class StatusOr {
 
   template <typename U>
   T value_or(U &&u) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     return ok() ? get() : T{std::forward<U>(u)};
+#pragma GCC diagnostic pop
   }
 
   ABSL_MUST_USE_RESULT StatusCode code() const { return status_.code(); }
@@ -236,12 +239,18 @@ class StatusOr {
   // Copy current value out if OK status, otherwise construct default value.
   T value_or_default() const & {
     static_assert(std::is_copy_constructible_v<T>, "T must by copy constructable");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     if (ok()) return get();
+#pragma GCC diagnostic pop
     return T{};
   }
   T value_or_default() && {
     static_assert(std::is_copy_constructible_v<T>, "T must by copy constructable");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
     if (ok()) return std::move(get());
+#pragma GCC diagnostic pop
     return T{};
   }
 

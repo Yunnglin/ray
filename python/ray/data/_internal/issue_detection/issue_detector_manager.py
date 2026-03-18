@@ -94,5 +94,5 @@ class IssueDetectorManager:
                 operator.metrics._issue_detector_high_memory += 1
         if len(issues) > 0:
             logger.warning(
-                f"Found {len(issues)} issues. To disable issue detection, run DataContext.get_current().issue_detectors_config.detectors = []."
+                "To disable issue detection, run DataContext.get_current().issue_detectors_config.detectors = []."
             )

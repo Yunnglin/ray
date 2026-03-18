@@ -1,6 +1,5 @@
 import copy
 import logging
-from dataclasses import is_dataclass, replace
 from typing import List
 
 from ray.data._internal.logical.interfaces import LogicalOperator, LogicalPlan, Rule
@@ -189,13 +188,6 @@ class LimitPushdownRule(Rule):
     ) -> LogicalOperator:
         """Apply per-block limit to operators that support it."""
         if isinstance(op, AbstractMap):
-            if is_dataclass(op):
-                assert len(op.input_dependencies) == 1, len(op.input_dependencies)
-                return replace(
-                    op,
-                    input_op=op.input_dependency,
-                    per_block_limit=limit,
-                )
             new_op = copy.copy(op)
             new_op.set_per_block_limit(limit)
             return new_op
@@ -216,8 +208,6 @@ class LimitPushdownRule(Rule):
                 ray_remote_args=original_op.ray_remote_args,
                 filesystem=original_op.filesystem,
             )
-        if isinstance(original_op, AbstractMap) and is_dataclass(original_op):
-            return replace(original_op, input_op=new_input)
 
         # Use copy and replace input dependencies approach
         new_op = copy.copy(original_op)

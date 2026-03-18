@@ -13,7 +13,6 @@ from ray.data._internal.execution.interfaces import (
     NodeIdStr,
 )
 from ray.data._internal.logging import configure_logging
-from ray.data._internal.random_config import RandomSeedConfig
 from ray.data.context import DataContext, DatasetContext
 from ray.data.dataset import (
     Dataset,
@@ -139,7 +138,6 @@ __all__ = [
     "ExecutionResources",
     "FileShuffleConfig",
     "NodeIdStr",
-    "RandomSeedConfig",
     "ReadTask",
     "RowBasedFileDatasink",
     "Schema",
