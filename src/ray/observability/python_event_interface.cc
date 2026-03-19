@@ -67,6 +67,7 @@ rpc::events::RayEvent PythonRayEvent::Serialize() && {
   // Set source process metadata.
   char hostname_buf[256];
   if (gethostname(hostname_buf, sizeof(hostname_buf)) == 0) {
+    hostname_buf[sizeof(hostname_buf) - 1] = '\0';
     event.set_source_hostname(hostname_buf);
   }
   event.set_source_pid(getpid());
